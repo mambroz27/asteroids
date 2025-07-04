@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c078k7cvvum6r"]
+[gd_scene load_steps=3 format=3 uid="uid://c078k7cvvum6r"]
 
 [ext_resource type="PackedScene" uid="uid://cctk2q1p7yj5" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://cysdg01i86c10" path="res://scripts/game.gd" id="1_yqjtg"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_yqjtg")
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(640, 360)
+
+[node name="Lasers" type="Node" parent="."]

@@ -2,8 +2,25 @@ extends CharacterBody2D
 
 @export var acceleration := 10.0
 @export var deceleration := 4.0
-@export var max_speed := 500.0
-@export var rotation_speed := 200.0
+@export var max_speed := 400.0
+@export var rotation_speed := 300.0
+@export var rate_of_fire := 0.25
+
+@onready var cannon := $Cannon
+
+var laser_cooldown := false
+var laser_scene := preload("res://scenes/laser.tscn")
+
+signal laser_shot(laser)
+
+func _process(delta):
+	if Input.is_action_pressed("shoot"):
+		if !laser_cooldown:
+			laser_cooldown = true
+			shoot_laser()
+			
+			await get_tree().create_timer(rate_of_fire).timeout
+			laser_cooldown = false
 
 func _physics_process(delta):
 	var input_vector := Vector2(0, Input.get_axis("accelerate", "decelerate"))
@@ -24,8 +41,6 @@ func _physics_process(delta):
 	# Update the velocity
 	velocity = velocity.limit_length(max_speed)
 	
-	print("Velocity: ", velocity)
-	
 	# Move the player
 	move_and_slide()
 	
@@ -42,3 +57,11 @@ func _physics_process(delta):
 		global_position.x = screen_size.x
 	elif (global_position.x > screen_size.x):
 		global_position.x = 0
+		
+func shoot_laser():
+	var l = laser_scene.instantiate()
+	
+	l.global_position = cannon.global_position
+	l.rotation = rotation
+	
+	emit_signal("laser_shot", l)
