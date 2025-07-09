@@ -6,6 +6,7 @@ extends Node2D
 @onready var hud := $UI/HUD
 @onready var game_over := $UI/GameOverScreen
 @onready var player_spawn_pos := $PlayerSpawnPos
+@onready var player_spwan_area := $PlayerSpawnPos/PlayerSpawnArea
 
 var score: int:
 	set (value):
@@ -36,10 +37,12 @@ func _process(_delta):
 
 
 func _on_player_laser_shot(laser):
+	$LaserSound.play()
 	lasers.add_child(laser)
 
 
 func _on_player_died():
+	$PlayerDieSound.play()
 	lives -= 1
 	
 	if lives <= 0:
@@ -47,10 +50,15 @@ func _on_player_died():
 		game_over.visible = true
 	else:
 		await get_tree().create_timer(1).timeout
+	
+		while !player_spwan_area.is_empty:
+			await get_tree().create_timer(0.1).timeout
+	
 		player.respawn(player_spawn_pos.global_position)
 
 
 func _on_asteroid_exploded(pos, size, points):
+	$AsteroidHitSound.play()
 	score += points
 	
 	match size:

@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://c078k7cvvum6r"]
+[gd_scene load_steps=10 format=3 uid="uid://c078k7cvvum6r"]
 
 [ext_resource type="PackedScene" uid="uid://cctk2q1p7yj5" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://cysdg01i86c10" path="res://scripts/game.gd" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c60egw1vgvaey" path="res://scenes/hud.tscn" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://com4l85ovq2xc" path="res://scenes/game_over_screen.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://nab7h0s276d1" path="res://scenes/asteroid.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://djyrns624o1kh" path="res://scenes/player_spawn_area.tscn" id="6_p57ef"]
+[ext_resource type="AudioStream" uid="uid://wb4ayewpop7m" path="res://assets/audio/laser_retro_02.ogg" id="7_0tnpc"]
+[ext_resource type="AudioStream" uid="uid://byrtukufas4h2" path="res://assets/audio/explosion_crunch_00.ogg" id="8_vtaks"]
+[ext_resource type="AudioStream" uid="uid://bcg8akxfquiba" path="res://assets/audio/explosion_crunch_01.ogg" id="9_kvpfn"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_yqjtg")
@@ -45,3 +49,14 @@ rotation = -1.5708
 
 [node name="PlayerSpawnPos" type="Node2D" parent="."]
 position = Vector2(640, 360)
+
+[node name="PlayerSpawnArea" parent="PlayerSpawnPos" instance=ExtResource("6_p57ef")]
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_0tnpc")
+
+[node name="AsteroidHitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_vtaks")
+
+[node name="PlayerDieSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_kvpfn")
