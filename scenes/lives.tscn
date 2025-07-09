@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://oytppo043j6p"]
+
+[ext_resource type="Texture2D" uid="uid://dckp1fyo3m4lk" path="res://assets/textures/player_life_blue.png" id="1_3syyo"]
+
+[node name="Lives" type="TextureRect"]
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 49.0
+offset_bottom = 82.0
+texture = ExtResource("1_3syyo")

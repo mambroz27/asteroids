@@ -9,9 +9,21 @@ class_name Asteroid extends Area2D
 var movement_vector := Vector2(0, -1)
 var speed := base_speed
 
+var points: int:
+	get:
+		match size:
+			AsteroidSize.LARGE:
+				return 100
+			AsteroidSize.MEDIUM:
+				return 50
+			AsteroidSize.SMALL:
+				return 25
+			_:
+				return 0
+
 enum AsteroidSize{LARGE, MEDIUM, SMALL}
 
-signal exploded(position, size)
+signal exploded(position, size, points)
 
 
 func _ready():
@@ -54,5 +66,11 @@ func _physics_process(delta):
 
 
 func explode():
-	emit_signal("exploded", global_position, size)
+	emit_signal("exploded", global_position, size, points)
 	queue_free()
+
+
+func _on_body_entered(body):
+	if body is Player:
+		var player = body
+		player.die()

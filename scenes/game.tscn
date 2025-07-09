@@ -1,11 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://c078k7cvvum6r"]
+[gd_scene load_steps=6 format=3 uid="uid://c078k7cvvum6r"]
 
 [ext_resource type="PackedScene" uid="uid://cctk2q1p7yj5" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://cysdg01i86c10" path="res://scripts/game.gd" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://c60egw1vgvaey" path="res://scenes/hud.tscn" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://com4l85ovq2xc" path="res://scenes/game_over_screen.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://nab7h0s276d1" path="res://scenes/asteroid.tscn" id="3_lnu2h"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_yqjtg")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("2_lbhrr")]
+
+[node name="GameOverScreen" parent="UI" instance=ExtResource("3_iywne")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(640, 360)
@@ -15,13 +24,24 @@ position = Vector2(640, 360)
 [node name="Asteroids" type="Node" parent="."]
 
 [node name="Asteroid" parent="Asteroids" instance=ExtResource("3_lnu2h")]
-position = Vector2(329, 527)
+position = Vector2(-80, 782)
 rotation = -1.5708
 
 [node name="Asteroid2" parent="Asteroids" instance=ExtResource("3_lnu2h")]
-position = Vector2(273, 167)
+position = Vector2(-82, 98)
 rotation = -1.5708
 
 [node name="Asteroid3" parent="Asteroids" instance=ExtResource("3_lnu2h")]
-position = Vector2(1054, 489)
+position = Vector2(1343, 774)
 rotation = -1.5708
+
+[node name="Asteroid4" parent="Asteroids" instance=ExtResource("3_lnu2h")]
+position = Vector2(1419, 398)
+rotation = -1.5708
+
+[node name="Asteroid5" parent="Asteroids" instance=ExtResource("3_lnu2h")]
+position = Vector2(1172, -77)
+rotation = -1.5708
+
+[node name="PlayerSpawnPos" type="Node2D" parent="."]
+position = Vector2(640, 360)
