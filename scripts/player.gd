@@ -8,6 +8,7 @@ class_name Player extends CharacterBody2D
 
 @onready var sprite := $Sprite2D
 @onready var cannon := $Cannon
+@onready var collision_shape := $CollisionShape2D
 
 var laser_cooldown := false
 var alive := true
@@ -18,6 +19,9 @@ signal died
 
 
 func _process(_delta):
+	if !alive:
+		return
+	
 	if Input.is_action_pressed("shoot"):
 		if !laser_cooldown:
 			laser_cooldown = true
@@ -28,6 +32,9 @@ func _process(_delta):
 
 
 func _physics_process(delta):
+	if !alive:
+		return
+	
 	var input_vector := Vector2(0, Input.get_axis("accelerate", "decelerate"))
 	
 	velocity += input_vector.rotated(rotation) * lerp(0.5, acceleration, clampf(velocity.length() * acceleration, 0, 1.0))
@@ -79,16 +86,14 @@ func die():
 	if alive == true:
 		alive = false
 		sprite.visible = false
+		collision_shape.set_deferred("disabled", true)
 		emit_signal("died")
-		
-		process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func respawn(pos):
 	if alive == false:
+		alive = true
 		global_position = pos
 		velocity = Vector2.ZERO
 		sprite.visible = true
-		alive = true
-		
-		process_mode = Node.PROCESS_MODE_INHERIT
+		collision_shape.set_deferred("disabled", false)
